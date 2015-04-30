@@ -5,8 +5,9 @@ This is a collection of python or shell scripts to backup webcomics I like to re
 
 Requires
 --------
- * Python 3
- * notify-osd for the notifications (optional)
+
+* Python 3
+* notify-osd for the notifications (optional)
 
 Usage
 -----

@@ -26,8 +26,8 @@ Simply go to the directory of the webcomic you want and run the script:
 
 
 I tried to name my scripts such that:
-* getall scripts will download the integrality of a comic everytime you run them
-* update scripts will download the integrality of a comic the first time, and only what's missing the next times; allowing you to call those scripts regularly via cron for example
+ * getall scripts will download the integrality of a comic everytime you run them
+ * update scripts will download the integrality of a comic the first time, and only what's missing the next times; allowing you to call those scripts regularly via cron for example
 
 
 Les autres gens

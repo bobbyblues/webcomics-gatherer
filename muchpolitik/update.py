@@ -17,15 +17,15 @@ def get_tweets():
 	response = urllib.request.urlopen(url)
 	data = response.read()
 	tree = html.fromstring(data)
-	tweets = tree.find_class("StreamItem js-stream-item")
+	tweets = tree.find_class("tweet")
 	return tweets
 
 def get_image_tweet(tweet):
-	image_sections = tweet.find_class("TwitterPhoto-media")
+	image_sections = tweet.find_class("cards-base cards-multimedia")
 	if len(image_sections) == 0:
 		return -1
 	section = image_sections[0]
-	image_url = "https:" + section.findall('a')[0].get('href')
+	image_url = "https:" + section.get('data-card-url')
 	return image_url
 
 def download_image(url, name):
@@ -34,7 +34,7 @@ def download_image(url, name):
 
 	image_link = image_data.split('"og:image" content="')[-1].split('">')[0]
 	extension = image_link.split('.')[-1].split(':')[0]
-	image_path = output_dir +  name + "." + extension
+	image_path = os.path.join(output_dir,name + "." + extension)
 	if os.path.isfile(image_path):
 		i = 2
 		while os.path.isfile(image_path):
@@ -45,8 +45,8 @@ def download_image(url, name):
 
 # We load the last saved image URL if any
 saved = {}
-if os.path.isfile(output_dir + 'muchpolitik.json'):
-	saved = json.load(open(output_dir + 'muchpolitik.json', 'r'))
+if os.path.isfile(os.path.join(output_dir, 'muchpolitik.json')):
+	saved = json.load(open(os.path.join(output_dir, '/muchpolitik.json'), 'r'))
 
 last_image_link = ""
 if "last_image_link" in saved.keys():
@@ -63,8 +63,8 @@ for tweet in tweets:
 	latest_image = get_image_tweet(tweet)
 
 	# If there is a new image, we download it
-	if latest_image != last_image_link:
-		date = tweet.find_class("js-short-timestamp")[0]
+	if latest_image != -1 and latest_image != last_image_link:
+		date = tweet.find_class("_timestamp js-short-timestamp")[0]
 		date = datetime.date.fromtimestamp(int(date.get('data-time')))
 
 		download_image(latest_image, str(date))

@@ -3,6 +3,8 @@ from urllib import request
 import time
 import sys
 
+# Hanna was here :)
+
 # Base url for all images
 url_base = "http://www.darthsanddroids.net/comics/darths"
 
